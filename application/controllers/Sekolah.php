@@ -52,7 +52,7 @@ class Sekolah extends CI_Controller {
         
         if ($this->form_validation->run() == TRUE) {
             $config['upload_path']          = './geojson/';
-            $config['allowed_types']        = 'json';
+            $config['allowed_types']        = '*';
             
             $this->upload->initialize($config);
             if ( ! $this->upload->do_upload('petageojson'))
@@ -64,11 +64,11 @@ class Sekolah extends CI_Controller {
                 $this->load->view('layout/v_wrapper', $data, FALSE);
             }else{
                 $petageojson = array('uploads'=>$this->upload->data());
-                $config['peta_library'] = 'gd2';
+                $config['image_library'] = 'gd2';
                 $config['source_peta'] = './geojson/'.$petageojson['uploads']['file_name'];
-                $this->load->library('peta_library', $config);
+                $this->load->library('image_lib', $config);
                 $data = array (
-                    'namah' => $this->input->post('nama'),
+                    'nama' => $this->input->post('nama'),
                     'alamat' => $this->input->post('alamat'),
                     'jenis' => $this->input->post('jenis'),
                     'kepala_sekolah' => $this->input->post('kepala_sekolah'),
@@ -152,6 +152,7 @@ class Sekolah extends CI_Controller {
         $this->user_login->cek_login();
         $data = array ('id' => $id);
         $this->m_sekolah->hapus($data);
+        
         $this->session->set_flashdata('pesan', 'Data berhasil dihapus');
         redirect('sekolah');
     }

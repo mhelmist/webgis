@@ -5,7 +5,7 @@ class Home extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('m_home');
-        $this->user_login->cek_login();
+        $this->load->model('m_sekolah');
     }
     public function index()
     {
@@ -21,7 +21,7 @@ class Home extends CI_Controller {
     {
         $data = array(
             'title' => 'Peta Zonasi',
-            'peta' => $this->m_home->tampil(),
+            'peta' => $this->m_home->all_data(),
             'isi' => 'v_geojson'
         );
         $this->load->view('layout/v_wrapper', $data, FALSE);
