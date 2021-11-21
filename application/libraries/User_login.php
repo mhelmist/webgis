@@ -14,17 +14,17 @@ class User_login
     {
         $cek = $this->ci->m_login->login($username, $password);
         if ($cek) {
-            $nama = $cek->nama;
+            $nama_user = $cek->nama_user;
             $username = $cek->username;
 
             //session
-            $this->ci->session->set_userdata('nama', $nama);
+            $this->ci->session->set_userdata('nama_user', $nama_user);
             $this->ci->session->set_userdata('username', $username);
-            //jika benar maka langsung ke home
+            //apabila benar maka langsung ke home
             redirect('home');
 
         }else{
-            //jika salah maka kembali ke login
+            //jika pass salah maka kembali ke login
             $this->ci->session->set_flashdata('pesan', 'username atau password salah');
             redirect('login');
         }
@@ -40,7 +40,7 @@ class User_login
     }
     public function logout()
     {
-        $this->ci->session->unset_userdata('nama');
+        $this->ci->session->unset_userdata('nama_user');
         $this->ci->session->unset_userdata('username');
         $this->ci->session->set_flashdata('pesan', 'Anda berhasil logout');
         redirect('login');

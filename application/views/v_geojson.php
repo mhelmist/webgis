@@ -16,7 +16,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 
 
-$.getJSON("<?= base_url('geojson/'. $value->petageojson) ?>", function($data)
+$.getJSON("<?= base_url('geojson/'. $value->peta) ?>", function($data)
 {
     geoLayer = L.geoJson($data,{
         style: function(feature){
@@ -31,7 +31,7 @@ $.getJSON("<?= base_url('geojson/'. $value->petageojson) ?>", function($data)
     }).addTo(mymap);
 
     geoLayer.eachLayer(function(layer){
-        layer.bindPopup("Wilayah Zonasi : <?= $value->nama ?>")
+        layer.bindPopup("Wilayah Zonasi : <?= $value->nama_sekolah ?>")
     });
 });
 <?php } ?>

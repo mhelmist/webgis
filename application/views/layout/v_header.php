@@ -7,18 +7,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">WEBGIS</a> 
+                <a class="navbar-brand" href="index.html">GIS Sekolah</a> 
             </div>
   <div style="color: white;
 padding: 15px 50px 5px 50px;
 float: right;
 font-size: 16px;"> Tanggal : <?= date('d M Y') ?>
-        <?php if($this->session->userdata('username')==''){?>
-            <a href="<?= base_url('login') ?>" class="btn btn-danger square-btn-adjust">Login</a> 
-        <?php }else{ ?>
-            Nama User : <?= $this->session->userdata('nama') ?>
-            <a href="<?= base_url('login/logout') ?>" class="btn btn-danger square-btn-adjust">Logout</a> 
-        <?php } ?>
-</div>
-    </nav>  
+<?php if($this->session->userdata('username')==''){?>
+    <a href="<?= base_url('login') ?>" class="btn btn-danger square-btn-adjust">Login</a> 
+<?php }else{ ?>
+    Nama User : <?= $this->session->userdata('nama_user') ?>
+    <a href="<?= base_url('login/logout') ?>" class="btn btn-danger square-btn-adjust">Logout</a> 
+<?php } ?>
+ </div>
+  </nav>   
            <!-- /. NAV TOP  -->
