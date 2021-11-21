@@ -94,6 +94,7 @@
          <input type="file" name="petageojson" class="form-control" required/>
          
       </div>
+      
       <div class="form-group">
          <label>Warma</label>
          <input name="warna" placeholder="Warna" value="<?= set_value('warna') ?>" class="form-control" required />

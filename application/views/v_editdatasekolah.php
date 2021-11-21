@@ -36,7 +36,7 @@
       }
 
 
-       echo form_open('sekolah/edit/'.$sekolah->id); 
+       echo form_open_multipart('sekolah/edit/'.$sekolah->id); 
        
        ?>
 
@@ -83,6 +83,18 @@
       <div class="form-group">
          <label>Keterangan</label>
          <input name="keterangan" placeholder="Keterangan" value="<?= $sekolah->keterangan ?>" class="form-control" />
+         
+      </div>
+
+      <div class="form-group">
+         <label>Geojson</label>
+         <input type="file" name="petageojson" placeholder="File Geojson" value="<?= base_url('geojson/'.$sekolah->petageojson) ?>" class="form-control" />
+         
+      </div>
+
+      <div class="form-group">
+         <label>Warma</label>
+         <input name="warna" placeholder="Warna" value="<?= $sekolah->warna ?>" class="form-control" required />
          
       </div>
 

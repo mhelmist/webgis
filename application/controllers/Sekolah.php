@@ -121,30 +121,52 @@ class Sekolah extends CI_Controller {
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'required',array(
             'required' => '%s Harus Diisi!!'
         ));
+        
+        $this->form_validation->set_rules('warna', 'warna', 'required',array(
+            'required' => '%s Harus Diisi!!'
+        ));
 
-        if ($this->form_validation->run() == FALSE) {
-            $data = array(
-                'title' => 'Edit Data Sekolah',
-                'sekolah' => $this->m_sekolah->detail($id),
-                'isi' => 'v_editdatasekolah' );
-            $this->load->view('layout/v_wrapper', $data, FALSE);
-        }else{
-
-            $data = array (
-                'id' => $id,
-                'nama' => $this->input->post('nama'),
-                'alamat' => $this->input->post('alamat'),
-                'jenis' => $this->input->post('jenis'),
-                'kepala_sekolah' => $this->input->post('kepala_sekolah'),
-                'latitude' => $this->input->post('latitude'),
-                'longitude' => $this->input->post('longitude'),
-                'keterangan' => $this->input->post('keterangan')
-            );
+        if ($this->form_validation->run() == TRUE) {
+            $config['upload_path']          = './geojson/';
+            $config['allowed_types']        = '*';
+            
+            $this->upload->initialize($config);
+            if ( ! $this->upload->do_upload('petageojson'))
+            {
+                $data = array(
+                    'title' => 'Edit Data Sekolah',
+                    'error_upload' => $this->upload->display_errors(),
+                    'sekolah' => $this->m_sekolah->detail($id),
+                    'isi' => 'v_editdatasekolah' );
+                $this->load->view('layout/v_wrapper', $data, FALSE);
+            }else{
+                $petageojson = array('uploads'=>$this->upload->data());
+                $config['image_library'] = 'gd2';
+                $config['source_peta'] = './geojson/'.$petageojson['uploads']['file_name'];
+                $this->load->library('image_lib', $config);
+                $data = array (
+                    'id' => $id,
+                    'nama' => $this->input->post('nama'),
+                    'alamat' => $this->input->post('alamat'),
+                    'jenis' => $this->input->post('jenis'),
+                    'kepala_sekolah' => $this->input->post('kepala_sekolah'),
+                    'latitude' => $this->input->post('latitude'),
+                    'longitude' => $this->input->post('longitude'),
+                    'keterangan' => $this->input->post('keterangan'),
+                    'petageojson' => $petageojson['uploads']['file_name'],
+                    'warna' => $this->input->post('warna'),
+                );
             $this->m_sekolah->edit($data);
-            $this->session->set_flashdata('pesan', 'Data berhasil diubah');
+            $this->session->set_flashdata('pesan', 'Data berhasil disimpan');
             redirect('sekolah');
             
-        }
+          }
+        }  
+        $data = array(
+            'title' => 'Edit Data Sekolah',
+            'sekolah' => $this->m_sekolah->detail($id),
+            'isi' => 'v_editdatasekolah' );
+        $this->load->view('layout/v_wrapper', $data, FALSE);
     
     }
     public function hapus($id)
